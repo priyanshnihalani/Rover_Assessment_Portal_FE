@@ -210,7 +210,7 @@ const StudentExamLogin = () => {
                 <footer className="py-12 px-6 border-t border-[#d2d2d7]/30 text-center">
                     <div className="max-w-4xl mx-auto space-y-4">
                         <p className="text-[11px] font-semibold text-apple-gray tracking-widest uppercase">
-                            Rover Assessment Environment
+                            Rover Assessment Portal
                         </p>
                         <p className="text-xs text-apple-gray/60 max-w-lg mx-auto leading-relaxed">
                             Copyright © {new Date().getFullYear()} Secure Assessment Services. All rights reserved.
