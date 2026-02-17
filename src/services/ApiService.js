@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://rover-assessment-portal-be.onrender.com",
 });
 
 export const ApiService = {
