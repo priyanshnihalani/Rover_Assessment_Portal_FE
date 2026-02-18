@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ApiService } from "../../services/ApiService"
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import HexLoader from "../../components/loader";
+import { Trash } from 'lucide-react';
 
 const ExamBuilder = () => {
     const [title, setTitle] = useState("");
@@ -431,6 +432,7 @@ const ExamBuilder = () => {
                                                         className="focus:outline-none w-8 bg-transparent border-none p-0 text-sm font-bold text-center focus:ring-0"
                                                     />
                                                 </div>
+                                                    <Trash className="text-red-500 size-5"/>
                                             </div>
                                         </div>
 
