@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const StudentExamLogin = () => {
     const [form, setForm] = useState({
-        name:"",
         email: "",
         code: "",
         terms: false,
@@ -25,9 +24,6 @@ const StudentExamLogin = () => {
     const validate = () => {
         const newErrors = {};
 
-        if (!form.name) {
-            newErrors.name = "Username is required"; 
-        } 
         if (!form.email) {
             newErrors.email = "Email is required";
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
@@ -98,24 +94,6 @@ const StudentExamLogin = () => {
 
                             <div className="bg-white p-8 md:p-10 rounded-apple-lg shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-white">
                                 <form onSubmit={handleSubmit} className="space-y-6">
-                                    {/* Name */}
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-semibold text-apple-dark uppercase tracking-wider ml-1">
-                                            Student UserName
-                                        </label>
-                                        <input
-                                            name="name"
-                                            value={form.name}
-                                            onChange={handleChange}
-                                            className={`apple-input ${errors.name ? "border-red-400" : ""
-                                                }`}
-                                            placeholder="John Doe"
-                                            type="text"
-                                        />
-                                        {errors.name && (
-                                            <p className="text-xs text-red-500 ml-1">{errors.name}</p>
-                                        )}
-                                    </div>
                                     {/* Email */}
                                     <div className="space-y-2">
                                         <label className="text-xs font-semibold text-apple-dark uppercase tracking-wider ml-1">
