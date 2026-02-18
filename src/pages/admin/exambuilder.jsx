@@ -218,6 +218,25 @@ const ExamBuilder = () => {
     };
 
 
+    const deleteQuestion = async (id) => {
+        try {
+            const result = await ApiService.post(`/api/paper/deleteQuestion/${id}`)
+            console.log(result)
+        }
+        catch {
+            console.log(error)
+        }
+    }
+
+    const deletePaper = async (id) => {
+        try {
+            const result = await ApiService.post(`/api/paper/deletePaper/${id}`)
+            console.log(result)
+        }
+        catch {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -432,7 +451,7 @@ const ExamBuilder = () => {
                                                         className="focus:outline-none w-8 bg-transparent border-none p-0 text-sm font-bold text-center focus:ring-0"
                                                     />
                                                 </div>
-                                                    <Trash className="text-red-500 size-5"/>
+                                                <Trash className="text-red-500 size-5" onClick={() => deleteQuestion(q.id)} />
                                             </div>
                                         </div>
 
