@@ -153,6 +153,7 @@ export default function ExamUI() {
 
             const res = await ApiService.post("/api/submission/submit", payload)
             setResult(res.result)
+            
         } catch (err) {
             console.error(err);
             alert(err.message);
@@ -305,7 +306,7 @@ export default function ExamUI() {
                                                             onClick={() => setCurrentIndex(i)}
                                                             className={cls}
                                                         >
-                                                            {String(i).padStart(2, "0")}
+                                                            {String(i + 1).padStart(2, "0")}
                                                         </div>
                                                     );
                                                 })}
