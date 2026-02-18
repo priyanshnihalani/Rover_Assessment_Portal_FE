@@ -261,15 +261,7 @@ export default function ExamUI() {
                                         </div>
 
                                         {/* Right */}
-                                        <div className="flex items-center gap-3 sm:gap-4">
-                                            <button className="cursor-pointer text-xs font-medium text-slate-400 hover:text-slate-600 uppercase tracking-wider">
-                                                Instructions
-                                            </button>
-
-                                            <button onClick={submitExam} className="cursor-pointer px-4 sm:px-5 py-2 text-xs font-semibold bg-apple-blue hover:bg-[#0071e3] text-white rounded-md  transition-all shadow-sm">
-                                                Submit Exam
-                                            </button>
-                                        </div>
+                                        
                                     </div>
                                 </header>
 
@@ -404,14 +396,29 @@ export default function ExamUI() {
                                                         )}
                                                     </button>
 
-                                                    <button
-                                                        disabled={currentIndex === questions.length - 1}
-                                                        onClick={() => setCurrentIndex((i) => i + 1)}
-                                                        className="cursor-pointer flex items-center gap-2 px-5 py-2 bg-sky-600 text-white rounded-lg text-sm disabled:opacity-40"
-                                                    >
-                                                        <ArrowRightCircle size={18} />
-                                                        <span>Next</span>
-                                                    </button>
+                                                    {
+  currentIndex === questions.length - 1 ? (
+
+    // ✅ Submit Button (last question)
+    <button
+      onClick={submitExam}
+      className="cursor-pointer px-4 sm:px-5 py-2 text-xs font-semibold bg-apple-blue hover:bg-[#0071e3] text-white rounded-md transition-all shadow-sm"
+    >
+      Submit Exam
+    </button>
+
+  ) : (
+
+    <button
+      onClick={() => setCurrentIndex((i) => i + 1)}
+      className="cursor-pointer flex items-center gap-2 px-5 py-2 bg-sky-600 text-white rounded-lg text-sm"
+    >
+      <ArrowRightCircle size={18} />
+      <span>Next</span>
+    </button>
+
+  )
+}
                                                 </div>
                                             </div>
                                         </div>

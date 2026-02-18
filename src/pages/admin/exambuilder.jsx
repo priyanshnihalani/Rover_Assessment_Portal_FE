@@ -223,8 +223,8 @@ const ExamBuilder = () => {
             const result = await ApiService.post(`/api/paper/deleteQuestion/${id}`)
             console.log(result)
         }
-        catch {
-            console.log(error)
+        catch(err) {
+            console.log(err)
         }
     }
 
@@ -233,8 +233,8 @@ const ExamBuilder = () => {
             const result = await ApiService.post(`/api/paper/deletePaper/${id}`)
             console.log(result)
         }
-        catch {
-            console.log(error)
+        catch(err) {
+            console.log(err)
         }
     }
 
@@ -267,16 +267,7 @@ const ExamBuilder = () => {
                                 {/* Navigation */}
                                 <nav className="hidden md:flex items-center gap-8">
 
-                                    <NavLink
-                                        to="/admin/exambuilder"
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-primary text-sm font-medium border-b-2 border-blue-400 border-primary pb-1"
-                                                : "text-slate-500 hover:text-primary text-sm font-medium"
-                                        }
-                                    >
-                                        Create Paper
-                                    </NavLink>
+                                    
                                 </nav>
 
                                 <div className="flex gap-4">
@@ -447,6 +438,7 @@ const ExamBuilder = () => {
                                                             const copy = [...questions];
                                                             copy[qi].points = e.target.value >= 0 && +e.target.value;
                                                             setQuestions(copy);
+                                                            console.log(questions)
                                                         }}
                                                         className="focus:outline-none w-8 bg-transparent border-none p-0 text-sm font-bold text-center focus:ring-0"
                                                     />
