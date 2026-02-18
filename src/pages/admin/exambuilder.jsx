@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ApiService } from "../../services/ApiService"
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import HexLoader from "../../components/loader";
@@ -12,6 +12,7 @@ const ExamBuilder = () => {
     const [loading, setLoading] = useState(false);
     const location = useLocation()
     const navigate = useNavigate()
+    const clickTimer = useRef(null);
 
     if (!location.state || location.state?.admin != "iamadmin") {
         navigate("/", { replace: true })
@@ -28,6 +29,7 @@ const ExamBuilder = () => {
         if (questions.length === 0) {
             setQuestions([
                 {
+                    id: "",
                     text: "",
                     points: 5,
                     options: ["", "", "", ""],
@@ -38,6 +40,7 @@ const ExamBuilder = () => {
         }
 
         const mappedQuestions = questions.map((q) => ({
+            id: q.id,
             text: q.prompt,
             points: q.points,
             options: q.Options
@@ -49,7 +52,6 @@ const ExamBuilder = () => {
         setQuestions(mappedQuestions);
     };
 
-    let clickTimer;
 
 
     const loadPapers = async () => {
@@ -84,6 +86,7 @@ const ExamBuilder = () => {
 
     const [questions, setQuestions] = useState([
         {
+            id: '',
             text: "",
             points: 5,
             options: ["", "", "", ""],
@@ -98,6 +101,7 @@ const ExamBuilder = () => {
         setQuestions([
             ...questions,
             {
+                id: "",
                 text: "",
                 points: 5,
                 options: ["", "", "", ""],
@@ -113,6 +117,7 @@ const ExamBuilder = () => {
         setQuestionsToShow(10);
         setQuestions([
             {
+                id: "",
                 text: "",
                 points: 5,
                 options: ["", "", "", ""],
@@ -222,18 +227,20 @@ const ExamBuilder = () => {
         try {
             const result = await ApiService.post(`/api/paper/deleteQuestion/${id}`)
             console.log(result)
+            await loadPapers();
         }
-        catch(err) {
+        catch (err) {
             console.log(err)
         }
     }
 
-    const deletePaper = async (id) => {
+    const deletePaper = async (event, id) => {
+        event.stopPropagation()
         try {
             const result = await ApiService.post(`/api/paper/deletePaper/${id}`)
             console.log(result)
         }
-        catch(err) {
+        catch (err) {
             console.log(err)
         }
     }
@@ -267,7 +274,7 @@ const ExamBuilder = () => {
                                 {/* Navigation */}
                                 <nav className="hidden md:flex items-center gap-8">
 
-                                    
+
                                 </nav>
 
                                 <div className="flex gap-4">
@@ -350,18 +357,22 @@ const ExamBuilder = () => {
                                     return (
                                         <div
                                             key={paper.id}
-                                            onClick={() => {
-                                                clearTimeout(clickTimer);
-                                                clickTimer = setTimeout(() => {
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+
+                                                clearTimeout(clickTimer.current);
+
+                                                clickTimer.current = setTimeout(() => {
                                                     activatePaper(paper);
                                                     loadPaperIntoEditor(paper);
                                                 }, 200);
                                             }}
 
                                             onDoubleClick={() => {
-                                                clearTimeout(clickTimer);
+                                                clearTimeout(clickTimer.current);
                                                 navigate(`/admin/studentexaminfo/${paper.id}`);
                                             }}
+
                                             className={`
                         relative p-4 rounded-xl border cursor-pointer transition
                         ${isActive
@@ -414,6 +425,7 @@ const ExamBuilder = () => {
                                     key={qi}
                                     className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
                                 >
+                                    {/* {console.log(q.id)} */}
                                     <div className="p-8">
                                         {/* Header */}
                                         <div className="flex items-center justify-between mb-8">
@@ -545,14 +557,16 @@ const ExamBuilder = () => {
                                     return (
                                         <div
                                             key={paper.id}
-                                            onClick={() => {
-                                                clearTimeout(clickTimer);
-                                                clickTimer = setTimeout(() => {
+                                            onClick={(e) => {
+                                                if (e.target.closest(".delete-btn")) return;
+
+                                                clearTimeout(clickTimer.current);
+
+                                                clickTimer.current = setTimeout(() => {
                                                     activatePaper(paper);
                                                     loadPaperIntoEditor(paper);
                                                 }, 200);
                                             }}
-
                                             onDoubleClick={() => {
                                                 clearTimeout(clickTimer);
                                                 navigate(`/admin/studentexaminfo/${paper.id}`);
@@ -564,14 +578,37 @@ const ExamBuilder = () => {
                                                     : "border-slate-200 hover:border-blue-300 hover:shadow-sm"
                                                 }
                     `}
-                                        >
-                                            {isActive && (
-                                                <span className="absolute top-2 right-2 text-[10px] px-2 py-[2px] rounded-full bg-blue-600 text-white font-semibold tracking-wide">
-                                                    ACTIVE
-                                                </span>
-                                            )}
+                                        >  <div className="flex items-center justify-between relative">
 
-                                            <h3 className="text-sm font-semibold text-slate-800">
+    {/* ACTIVE badge */}
+    {isActive && (
+        <span className="text-[10px] px-2 py-[2px] rounded-full bg-blue-600 text-white font-semibold tracking-wide">
+            ACTIVE
+        </span>
+    )}
+
+    {/* Delete button only when active */}
+    {isActive && (
+        <button
+            className="
+                ml-auto
+                bg-red-500
+                text-white
+                text-xs
+                px-3 py-1
+                rounded-full
+                transition
+            "
+            onClick={(event) => deletePaper(event, paper.id)}
+        >
+            Delete
+        </button>
+    )}
+
+</div>
+
+
+                                            <h3 className="text-sm font-semibold text-slate-800 my-2">
                                                 {paper.title || "Untitled Paper"}
                                             </h3>
 
