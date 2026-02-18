@@ -46,7 +46,7 @@ export default function ExamUI() {
             </div>
         );
     }
-    const { email, code } = data?.form;
+    const {name,  email, code } = data?.form;
     const [result, setResult] = useState({})
     const [success, setSuccess] = useState(null)
     const [submitted, setSubmitted] = useState(false);
@@ -71,7 +71,7 @@ export default function ExamUI() {
 
         try {
             setLoading(true)
-            const result = await ApiService.post('/api/paper/start', { email, code });
+            const result = await ApiService.post('/api/paper/start', { name, email, code });
 
             setSuccess(true)
             if (result.data?.alreadySubmitted) {
