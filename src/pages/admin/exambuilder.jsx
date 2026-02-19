@@ -239,6 +239,7 @@ const ExamBuilder = () => {
         try {
             const result = await ApiService.post(`/api/paper/deletePaper/${id}`)
             console.log(result)
+            await loadPapers();
         }
         catch (err) {
             console.log(err)
@@ -587,23 +588,20 @@ const ExamBuilder = () => {
         </span>
     )}
 
-    {/* Delete button only when active */}
-    {isActive && (
         <button
             className="
                 ml-auto
                 bg-red-500
                 text-white
                 text-xs
-                px-3 py-1
+                px-2 py-1
                 rounded-full
                 transition
             "
             onClick={(event) => deletePaper(event, paper.id)}
         >
-            Delete
+          Delete
         </button>
-    )}
 
 </div>
 
