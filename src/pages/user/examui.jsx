@@ -46,7 +46,7 @@ export default function ExamUI() {
             </div>
         );
     }
-    const {name,  email, code } = data?.form;
+    const { name, email, code } = data?.form;
     const [result, setResult] = useState({})
     const [success, setSuccess] = useState(null)
     const [submitted, setSubmitted] = useState(false);
@@ -147,6 +147,7 @@ export default function ExamUI() {
 
             const payload = {
                 code,
+                studentName: name,
                 studentEmail: email,
                 answers: payloadAnswers,
             };
@@ -169,7 +170,7 @@ export default function ExamUI() {
         if (savedTime && timeLeft <= 0 && !submitted && success === true) {
             setSubmitted(true);
             submitExam();
-            deleteCookie(savedTime)
+            deleteCookie("exam_time_left")
         }
     }, [timeLeft, submitted, success]);
 
@@ -222,7 +223,10 @@ export default function ExamUI() {
                                         </div>
 
                                         <p className="text-sm text-slate-500">
-                                            {Math.round((result.score / result.total) * 100)}% Score
+                                            {result.total > 0
+                                                ? Math.round((result.score / result.total) * 100)
+                                                : 0}
+                                            % Score
                                         </p>
                                     </div>
 
@@ -232,7 +236,13 @@ export default function ExamUI() {
                                             : "bg-rose-50 text-rose-600"
                                             }`}
                                     >
-                                        {result.score / result.total >= 0.4 ? "PASS" : "FAIL"}
+                                        {
+                                            result.total > 0
+                                                ? (result.score / result.total) >= 0.35
+                                                    ? "PASS"
+                                                    : "FAIL"
+                                                : "FAIL"
+                                        }
                                     </div>
 
                                 </div>
@@ -397,28 +407,28 @@ export default function ExamUI() {
                                                     </button>
 
                                                     {
-  currentIndex === questions.length - 1 ? (
+                                                        currentIndex === questions.length - 1 ? (
 
-    // ✅ Submit Button (last question)
-    <button
-      onClick={submitExam}
-      className="cursor-pointer px-4 sm:px-5 py-2 text-xs font-semibold bg-apple-blue hover:bg-[#0071e3] text-white rounded-md transition-all shadow-sm"
-    >
-      Submit Exam
-    </button>
+                                                            // ✅ Submit Button (last question)
+                                                            <button
+                                                                onClick={submitExam}
+                                                                className="cursor-pointer px-4 sm:px-5 py-2 text-xs font-semibold bg-apple-blue hover:bg-[#0071e3] text-white rounded-md transition-all shadow-sm"
+                                                            >
+                                                                Submit Exam
+                                                            </button>
 
-  ) : (
+                                                        ) : (
 
-    <button
-      onClick={() => setCurrentIndex((i) => i + 1)}
-      className="cursor-pointer flex items-center gap-2 px-5 py-2 bg-sky-600 text-white rounded-lg text-sm"
-    >
-      <ArrowRightCircle size={18} />
-      <span>Next</span>
-    </button>
+                                                            <button
+                                                                onClick={() => setCurrentIndex((i) => i + 1)}
+                                                                className="cursor-pointer flex items-center gap-2 px-5 py-2 bg-sky-600 text-white rounded-lg text-sm"
+                                                            >
+                                                                <ArrowRightCircle size={18} />
+                                                                <span>Next</span>
+                                                            </button>
 
-  )
-}
+                                                        )
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
