@@ -96,6 +96,7 @@ const StudentExamInfo = () => {
                                 <thead className="bg-slate-50 border-b">
                                     <tr className="text-left text-slate-500">
                                         <th className="px-6 py-3">#</th>
+                                        <th className="px-6 py-3">Student Name</th>
                                         <th className="px-6 py-3">Student Email</th>
                                         <th className="px-6 py-3">Score</th>
                                         <th className="px-6 py-3">Percentage</th>
@@ -115,6 +116,10 @@ const StudentExamInfo = () => {
                                                 className="border-b last:border-b-0 hover:bg-slate-50 transition"
                                             >
                                                 <td className="px-6 py-3 text-slate-500">{i + 1}</td>
+
+                                                <td className="px-6 py-3 font-medium text-slate-800">
+                                                    {s.studentName}
+                                                </td>
 
                                                 <td className="px-6 py-3 font-medium text-slate-800">
                                                     {s.studentEmail}
