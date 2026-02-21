@@ -369,10 +369,10 @@ const ExamBuilder = () => {
                                                 }, 200);
                                             }}
 
-                                            onDoubleClick={() => {
-                                                clearTimeout(clickTimer.current);
-                                                navigate(`/admin/studentexaminfo/${paper.id}`);
-                                            }}
+                                            // onDoubleClick={() => {
+                                            //     clearTimeout(clickTimer.current);
+                                            //     navigate(`/admin/studentexaminfo/${paper.id}`);
+                                            // }}
 
                                             className={`
                         relative p-4 rounded-xl border cursor-pointer transition
@@ -579,7 +579,7 @@ const ExamBuilder = () => {
                                                     : "border-slate-200 hover:border-blue-300 hover:shadow-sm"
                                                 }
                     `}
-                                        >  <div className="flex items-center justify-between relative">
+                                        >  <div className={`flex items-center justify-between relative`}>
 
     {/* ACTIVE badge */}
     {isActive && (
@@ -590,17 +590,31 @@ const ExamBuilder = () => {
 
         <button
             className="
-                ml-auto
                 bg-red-500
                 text-white
                 text-xs
-                px-2 py-1
+                px-2 py-[2px]
                 rounded-full
                 transition
+                cursor-pointer
             "
             onClick={(event) => deletePaper(event, paper.id)}
         >
           Delete
+        </button>
+                <button
+            className="
+                bg-red-500
+                text-white
+                text-xs
+                cursor-pointer
+                px-2 py-[2px]
+                rounded-full
+                transition
+            "
+            onClick={() => navigate(`/admin/studentexaminfo/${paper.id}`)}
+        >
+          View Results
         </button>
 
 </div>
