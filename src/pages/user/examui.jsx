@@ -223,7 +223,7 @@ export default function ExamUI() {
                                         </div>
 
                                         <p className="text-sm text-slate-500">
-                                            {result.total > 0
+                                            {result.score > 0
                                                 ? Math.round((result.score / result.total) * 100)
                                                 : 0}
                                             % Score
@@ -237,7 +237,7 @@ export default function ExamUI() {
                                             }`}
                                     >
                                         {
-                                            result.total > 0
+                                            result.score > 0
                                                 ? (result.score / result.total) >= 0.35
                                                     ? "PASS"
                                                     : "FAIL"

@@ -106,7 +106,7 @@ const StudentExamInfo = () => {
 
                                 <tbody>
                                     {submissions.map((s, i) => {
-                                        const percent = Math.round((s.score / s.totalMarks) * 100);
+                                        const percent = s.score > 0 ? Math.round((s.score / s.totalMarks) * 100) : 0;
                                         const pass = percent >= 40;
 
                                         return (
