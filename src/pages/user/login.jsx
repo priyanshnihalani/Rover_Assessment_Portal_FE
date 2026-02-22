@@ -101,7 +101,7 @@ const StudentExamLogin = () => {
                                     {/* Name */}
                                     <div className="space-y-2">
                                         <label className="text-xs font-semibold text-apple-dark uppercase tracking-wider ml-1">
-                                            Student UserName
+                                            UserName
                                         </label>
                                         <input
                                             name="name"
@@ -109,7 +109,7 @@ const StudentExamLogin = () => {
                                             onChange={handleChange}
                                             className={`apple-input ${errors.name ? "border-red-400" : ""
                                                 }`}
-                                            placeholder="John Doe"
+                                            placeholder="01-name"
                                             type="text"
                                         />
                                         {errors.name && (
@@ -119,7 +119,7 @@ const StudentExamLogin = () => {
                                     {/* Email */}
                                     <div className="space-y-2">
                                         <label className="text-xs font-semibold text-apple-dark uppercase tracking-wider ml-1">
-                                            Student Email
+                                            Email
                                         </label>
                                         <input
                                             name="email"

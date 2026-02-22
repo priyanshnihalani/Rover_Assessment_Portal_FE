@@ -58,7 +58,7 @@ const StudentExamInfo = () => {
                             </h1>
                         </div>
                         <p className="text-xs text-slate-400 mt-0.5">
-                            View student performance and attempts
+                            View performance and attempts
                         </p>
                     </div>
 
@@ -78,7 +78,7 @@ const StudentExamInfo = () => {
                     <div className="px-6 py-4 border-b flex items-center justify-between">
                         <div>
                             <h2 className="text-sm font-semibold text-slate-800">
-                                Student Exam Submissions
+                                Exam Submissions
                             </h2>
                             <p className="text-[11px] text-slate-400 mt-1">
                                 Total Attempts: {submissions.length}

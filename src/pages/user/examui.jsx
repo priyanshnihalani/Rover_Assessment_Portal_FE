@@ -229,22 +229,6 @@ export default function ExamUI() {
                                             % Score
                                         </p>
                                     </div>
-
-                                    <div
-                                        className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold ${result.score / result.total >= 0.4
-                                            ? "bg-emerald-50 text-emerald-600"
-                                            : "bg-rose-50 text-rose-600"
-                                            }`}
-                                    >
-                                        {
-                                            result.score > 0
-                                                ? (result.score / result.total) >= 0.35
-                                                    ? "PASS"
-                                                    : "FAIL"
-                                                : "FAIL"
-                                        }
-                                    </div>
-
                                 </div>
                             </div>)
                         }
