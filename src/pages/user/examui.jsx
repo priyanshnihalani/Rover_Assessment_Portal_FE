@@ -402,7 +402,7 @@ export default function ExamUI() {
                                                             // ✅ Submit Button (last question)
                                                             <button
                                                                 onClick={submitExam}
-                                                                className="cursor-pointer px-4 sm:px-5 py-2 text-xs font-semibold bg-apple-blue hover:bg-[#0071e3] text-white rounded-md transition-all shadow-sm"
+                                                                className="cursor-pointer px-4 sm:px-5 py-2 text-xs font-semibold bg-primary hover:bg-primary-dark text-white rounded-md transition-all shadow-sm"
                                                             >
                                                                 Submit Exam
                                                             </button>
