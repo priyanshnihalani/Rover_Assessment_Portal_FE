@@ -2,11 +2,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ApiService } from "../../services/ApiService";
 import { useEffect, useState } from "react";
 import HexLoader from "../../components/loader";
+import * as XLSX from "xlsx-js-style";
+import { saveAs } from "file-saver";
+import { ArrowUpDown } from "lucide-react";
 
 const StudentExamInfo = () => {
     const { id } = useParams();
     const [submissions, setSubmissions] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [displayData, setDisplayData] = useState([]);
+    const [isSorted, setIsSorted] = useState(false);
     const navigate = useNavigate()
 
     const loadSubmissions = async () => {
@@ -14,6 +19,8 @@ const StudentExamInfo = () => {
             setLoading(true)
             const res = await ApiService.get(`/api/submission/getSubmissions/${id}`);
             setSubmissions(res.result || []);
+            setDisplayData(res.result || []);
+            setIsSorted(false);
         } catch (err) {
             console.error(err);
         } finally {
@@ -32,6 +39,77 @@ const StudentExamInfo = () => {
             </div>
         );
     }
+
+    const exportToExcel = () => {
+
+        if (displayData.length === 0) return;
+
+        const excelData = displayData.map((s, i) => {
+            const percent =
+                s.score > 0 ? Math.round((s.score / s.totalMarks) * 100) : 0;
+
+            return {
+                "Sr No": i + 1,
+                "Student Name": s.studentName,
+                "Student Email": s.studentEmail,
+                "Score": `${s.score} / ${s.totalMarks}`,
+                "Percentage": percent + "%",
+                "Status": percent >= 40 ? "PASS" : "FAIL",
+                "Submitted At": new Date(s.createdAt).toLocaleString(),
+            };
+        });
+
+        // ✅ create worksheet
+        const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+        // ===== AUTO COLUMN WIDTH =====
+        const columnWidths = Object.keys(excelData[0]).map((key) => {
+            const maxLength = Math.max(
+                key.length,
+                ...excelData.map(row => (row[key] ? row[key].toString().length : 0))
+            );
+
+            return { wch: maxLength + 4 }; // extra padding
+        });
+
+        worksheet["!cols"] = columnWidths;
+        // ==============================
+
+        // workbook
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Submissions");
+
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        });
+
+        const blob = new Blob([excelBuffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+
+        saveAs(blob, "Exam_Submissions.xlsx");
+    };
+
+    const handlePercentageSort = () => {
+
+    // if already sorted → reset
+    if (isSorted) {
+        setDisplayData(submissions);
+        setIsSorted(false);
+        return;
+    }
+
+    // sort highest percentage first
+    const sorted = [...submissions].sort((a, b) => {
+        const percentA = (a.score / a.totalMarks) * 100;
+        const percentB = (b.score / b.totalMarks) * 100;
+        return percentB - percentA;
+    });
+
+    setDisplayData(sorted);
+    setIsSorted(true);
+};
 
     return (
         <div className="min-h-screen bg-slate-50">
@@ -68,6 +146,7 @@ const StudentExamInfo = () => {
                     >
                         ← Back
                     </button>
+
                 </div>
             </header>
 
@@ -84,9 +163,17 @@ const StudentExamInfo = () => {
                                 Total Attempts: {submissions.length}
                             </p>
                         </div>
+                        <button
+                            onClick={exportToExcel}
+                            className="cursor-pointer px-4 py-2 text-xs font-medium rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                        >
+                            Export Excel
+                        </button>
+
+
                     </div>
 
-                    {submissions.length === 0 ? (
+                    {displayData.length === 0 ? (
                         <div className="p-14 text-center text-slate-400">
                             No submissions yet.
                         </div>
@@ -99,14 +186,14 @@ const StudentExamInfo = () => {
                                         <th className="px-6 py-3">Student Name</th>
                                         <th className="px-6 py-3">Student Email</th>
                                         <th className="px-6 py-3">Score</th>
-                                        <th className="px-6 py-3">Percentage</th>
+                                        <th className="px-6 py-3 flex flex-row items-center">Percentage<ArrowUpDown size={14} onClick={handlePercentageSort} /></th>
                                         <th className="px-6 py-3">Status</th>
                                         <th className="px-6 py-3">Submitted At</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {submissions.map((s, i) => {
+                                    {displayData.map((s, i) => {
                                         const percent = s.score > 0 ? Math.round((s.score / s.totalMarks) * 100) : 0;
                                         const pass = percent >= 40;
 

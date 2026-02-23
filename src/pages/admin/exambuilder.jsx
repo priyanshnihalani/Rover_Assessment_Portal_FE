@@ -3,6 +3,7 @@ import { ApiService } from "../../services/ApiService"
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import HexLoader from "../../components/loader";
 import { Trash } from 'lucide-react';
+import logo from "../../../public/logorth.png"
 
 const ExamBuilder = () => {
     const [title, setTitle] = useState("");
@@ -246,6 +247,12 @@ const ExamBuilder = () => {
         }
     }
 
+    useEffect(() => {
+    return () => {
+        // 🔥 cancel pending single-click action
+        clearTimeout(clickTimer.current);
+    };
+}, []);
     return (
         <>
 
@@ -256,15 +263,7 @@ const ExamBuilder = () => {
                         <div className="max-w-[1440px] mx-auto flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <div className="size-6 text-apple-blue">
-                                    <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M12 2L3 7V17L12 22L21 17V7L12 2Z"
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="4"
-                                        />
-                                    </svg>
+                                    <img src={logo}/>
                                 </div>
                                 <span className="text-sm font-semibold tracking-tight uppercase">
                                     Rover Assessment Portal
@@ -279,7 +278,7 @@ const ExamBuilder = () => {
                                 </nav>
 
                                 <div className="flex gap-4">
-                                    <button onClick={saveExam} className="bg-blue-400 hover:bg-blue-500 transition cursor-pointer text-white px-5 py-2 rounded-md text-sm font-medium">
+                                    <button onClick={saveExam} className="bg-primary hover:bg-primary-dark transition cursor-pointer text-white px-5 py-2 rounded-md text-sm font-medium">
                                         Save Exam
                                     </button>
                                 </div>
@@ -569,14 +568,14 @@ const ExamBuilder = () => {
                                                 }, 200);
                                             }}
                                             onDoubleClick={() => {
-                                                clearTimeout(clickTimer);
+                                                clearTimeout(clickTimer.current);
                                                 navigate(`/admin/studentexaminfo/${paper.id}`);
                                             }}
                                             className={`
                         relative p-4 rounded-xl border cursor-pointer transition
                         ${isActive
-                                                    ? "border-blue-500 bg-blue-50 shadow-sm ring-1 ring-blue-200"
-                                                    : "border-slate-200 hover:border-blue-300 hover:shadow-sm"
+                                                    ? "border-orange-500 bg-orange-200/30 shadow-sm ring-1 ring-orange-200"
+                                                    : "border-slate-200 hover:border-orange-300 hover:shadow-sm"
                                                 }
                     `}
                                         >  <div className={`flex items-center justify-between relative`}>
@@ -624,7 +623,11 @@ const ExamBuilder = () => {
                                                 {paper.title || "Untitled Paper"}
                                             </h3>
 
-                                            <div className="mt-2 text-[11px] text-slate-500 space-y-1">
+                                            <div className={`
+                                             ${isActive
+                                                    ? "mt-2 text-[11px] text-black space-y-1"
+                                                    : "mt-2 text-[11px] text-slate-500 space-y-1"
+                                                }`}>
                                                 <p>{paper.code}</p>
                                                 <p>
                                                     {paper.questionsToShow} / {paper.Questions?.length || 0} Questions

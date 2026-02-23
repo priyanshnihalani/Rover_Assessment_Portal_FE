@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ApiService } from "../../services/ApiService";
 import { getCookie, setCookie, deleteCookie } from "../../helper/cookie"
 import HexLoader from "../../components/loader";
+import logo from "../../../public/logorth.png"
 
 
 export default function ExamUI() {
@@ -154,7 +155,7 @@ export default function ExamUI() {
 
             const res = await ApiService.post("/api/submission/submit", payload)
             setResult(res.result)
-            
+
         } catch (err) {
             console.error(err);
             alert(err.message);
@@ -238,12 +239,17 @@ export default function ExamUI() {
                                     <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                                         {/* Left */}
                                         <div className="flex flex-col">
-                                            <h1 className="text-sm font-semibold text-slate-900 tracking-tight">
-                                                Final Assessment: {title}
-                                            </h1>
-                                            <p className="text-[11px] text-slate-400 uppercase tracking-widest font-medium">
-                                                Question {currentIndex + 1} of {questions.length}
-                                            </p>
+                                            <div className="flex flex-row">
+                                                <img src={logo} className="w-10 h-10" />
+                                                <div className="ml-2">
+                                                    <h1 className="text-sm font-semibold text-slate-900 tracking-tight">
+                                                        Final Assessment: {title}
+                                                    </h1>
+                                                    <p className="text-[11px] text-slate-400 uppercase tracking-widest font-medium">
+                                                        Question {currentIndex + 1} of {questions.length}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         {/* Center (Timer) */}
@@ -255,7 +261,7 @@ export default function ExamUI() {
                                         </div>
 
                                         {/* Right */}
-                                        
+
                                     </div>
                                 </header>
 
@@ -279,7 +285,7 @@ export default function ExamUI() {
                                                         "aspect-square flex items-center justify-center text-xs font-bold rounded cursor-pointer border";
 
                                                     if (isActive)
-                                                        cls += " border-blue-500 text-blue-600 ring-4 ring-blue-100";
+                                                        cls += " border-orange-500 text-orange-600 ring-4 ring-orange-100";
                                                     else if (isFlagged)
                                                         cls += " bg-amber-50 text-amber-600 border-amber-200";
                                                     else if (isAnswered)
@@ -340,7 +346,7 @@ export default function ExamUI() {
                                                         <label
                                                             key={i}
                                                             className={`flex items-center p-4 rounded-xl border cursor-pointer transition ${selected
-                                                                ? "bg-sky-50 border-sky-300 ring-1 ring-sky-200"
+                                                                ? "bg-orange-50 border-orange-300 ring-1 ring-orange-100"
                                                                 : "border-slate-100 hover:border-slate-200"
                                                                 }`}
                                                         >
@@ -405,7 +411,7 @@ export default function ExamUI() {
 
                                                             <button
                                                                 onClick={() => setCurrentIndex((i) => i + 1)}
-                                                                className="cursor-pointer flex items-center gap-2 px-5 py-2 bg-sky-600 text-white rounded-lg text-sm"
+                                                                className="cursor-pointer flex items-center gap-2 px-5 py-2 bg-orange text-white rounded-lg text-sm"
                                                             >
                                                                 <ArrowRightCircle size={18} />
                                                                 <span>Next</span>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import HexLoader from "../../components/loader";
 import { useNavigate } from "react-router-dom";
-
+import logo from "../../../public/logorth.png"
 const StudentExamLogin = () => {
     const [form, setForm] = useState({
         name:"",
@@ -65,15 +65,7 @@ const StudentExamLogin = () => {
                 <header className="w-full py-8 px-6 md:px-12 flex justify-between items-center bg-apple-bg/80 backdrop-blur-md sticky top-0 z-10">
                     <div className="flex items-center gap-2">
                         <div className="size-6 text-apple-blue">
-                            <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2L3 7V17L12 22L21 17V7L12 2Z"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="4"
-                                />
-                            </svg>
+                            <img src={logo}/>
                         </div>
                         <span className="text-sm font-semibold tracking-tight uppercase">
                             Rover Assessment Portal
@@ -96,7 +88,7 @@ const StudentExamLogin = () => {
                                 </p>
                             </div>
 
-                            <div className="bg-white p-8 md:p-10 rounded-apple-lg shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-white">
+                            <div className="bg-white p-8 md:p-10 rounded-apple-lg shadow-[0_20px_40px_rgba(249,115,22,0.25)] border border-white">
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     {/* Name */}
                                     <div className="space-y-2">
@@ -182,7 +174,7 @@ const StudentExamLogin = () => {
 
                                     <button
                                         type="submit"
-                                        className="w-full bg-apple-blue hover:bg-[#0071e3] text-white font-semibold h-12 rounded-apple transition-all active:scale-[0.98] shadow-lg shadow-apple-blue/20 mt-4"
+                                        className="w-full bg-primary hover:bg-primary-dark text-white font-semibold h-12 rounded-apple transition-all active:scale-[0.98] shadow-lg shadow-apple-blue/20 mt-4"
                                     >
                                         Start Exam
                                     </button>
@@ -193,7 +185,7 @@ const StudentExamLogin = () => {
                         {/* Right */}
                         <div className="flex-1 w-full max-w-[480px] order-1 lg:order-2">
                             <div className="lg:pt-4">
-                                <h2 className="text-xs font-bold text-apple-blue uppercase tracking-[0.2em] mb-8">
+                                <h2 className="text-xs font-bold text-orange uppercase tracking-[0.2em] mb-8">
                                     Exam Guidelines
                                 </h2>
 
@@ -205,7 +197,7 @@ const StudentExamLogin = () => {
                                         ["do_not_disturb_on", "Single Attempt", "Timeout will automatically submit your results."],
                                     ].map(([icon, title, desc]) => (
                                         <div key={title} className="space-y-3">
-                                            <span className="material-symbols-outlined text-apple-blue text-3xl">
+                                            <span className="material-symbols-outlined text-orange text-3xl">
                                                 {icon}
                                             </span>
                                             <h3 className="text-base font-semibold text-apple-dark leading-none">

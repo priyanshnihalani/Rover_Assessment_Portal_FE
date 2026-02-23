@@ -11,7 +11,7 @@ function App() {
     /* ---------- PUBLIC ---------- */
     {
       path: "/",
-      element: <StudentExamLogin />,
+      element: <StudentExamLogin />,  
     },
 
     /* ---------- EXAM FLOW ---------- */
