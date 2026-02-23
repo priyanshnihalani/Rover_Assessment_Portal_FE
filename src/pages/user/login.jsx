@@ -1,7 +1,6 @@
 import { useState } from "react";
 import HexLoader from "../../components/loader";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../public/logorth.png"
 const StudentExamLogin = () => {
     const [form, setForm] = useState({
         name:"",
@@ -65,7 +64,7 @@ const StudentExamLogin = () => {
                 <header className="w-full py-8 px-6 md:px-12 flex justify-between items-center bg-apple-bg/80 backdrop-blur-md sticky top-0 z-10">
                     <div className="flex items-center gap-2">
                         <div className="size-6 text-apple-blue">
-                            <img src={logo}/>
+                            <img src={"/logorth.png"}/>
                         </div>
                         <span className="text-sm font-semibold tracking-tight uppercase">
                             Rover Assessment Portal

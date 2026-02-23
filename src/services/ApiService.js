@@ -1,7 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
+const url = {
+    prod: "https://api-exam.rovertraininghub.com",
+    dev: "http://localhost:3000"
+}
 const api = axios.create({
-    baseURL: "https://api-exam.rovertraininghub.com",
+    baseURL: url.prod,
 });
 
 export const ApiService = {
@@ -24,7 +28,7 @@ export const ApiService = {
 
     async postBlob(path, data = {}) {
         return api.post(path, data, {
-            responseType: "blob",
+            responseType: 'blob',
         });
     },
 };

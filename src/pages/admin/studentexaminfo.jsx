@@ -121,15 +121,7 @@ const StudentExamInfo = () => {
 
                         <div className="flex space-x-2 items-center">
                             <div className="size-6 text-apple-blue">
-                                <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2L3 7V17L12 22L21 17V7L12 2Z"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="4"
-                                    />
-                                </svg>
+                                <img src="/logorth.png" alt="_logo_" />
                             </div>
                             <h1 className="text-lg font-semibold text-slate-900 tracking-tight">
                                 Exam Submissions
