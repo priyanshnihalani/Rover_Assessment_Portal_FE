@@ -12,14 +12,14 @@ const StudentExamInfo = () => {
     const [loading, setLoading] = useState(false);
     const [displayData, setDisplayData] = useState([]);
     const [isSorted, setIsSorted] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
     const navigate = useNavigate()
 
     const loadSubmissions = async () => {
         try {
             setLoading(true)
             const res = await ApiService.post(`/api/submission/getSubmissions/${id}`, {
-                currentDate: new Date(selectedDate).toISOString().split("T")[0]
+                currentDate: selectedDate
             });
             setSubmissions(res.result || []);
             setDisplayData(res.result || []);
@@ -33,7 +33,7 @@ const StudentExamInfo = () => {
 
     useEffect(() => {
         loadSubmissions();
-    }, []);
+    }, [selectedDate]);
 
     console.log(new Date(selectedDate).toISOString().split("T")[0]);
     if (loading) {
