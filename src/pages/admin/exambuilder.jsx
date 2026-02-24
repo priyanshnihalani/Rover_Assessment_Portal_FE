@@ -269,7 +269,7 @@ const ExamBuilder = () => {
                                     <div className="size-9 rounded-full bg-slate-100 border border-slate-200 overflow-hidden">
                                         <img
                                             alt="Profile"
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover cursor-pointer"
                                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjoGxMYRgB84lHs8y-YDrdkzv8qf2cXOVUWVpQgaBNfXu35pc7dH3Q3kwnMIK0joU1sSkVK_DXiglMs4IG6kuP_vypkkrBmonnuQb0bHvuDwhVUw8Kz7CYPT7pD0dRwgfgA6ElKP5uzbvUOb7Q-9-lCKOo_Y7uvCH_WiqoSwYk3ngJixHBF1BMNMYKzHuQgP5NqVBqBYlQaRaclCD3qJZl1LyGiCqXeA3pHJBb_6NZGgXHYO0kjV9eG5-A0e7jF91R5YVXSzrXXgtL"
                                         />
                                     </div>
@@ -288,7 +288,7 @@ const ExamBuilder = () => {
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-slate-700">Exam Title</label>
                                             <input
-                                                className="pl-2 focus:outline-none focus:border focus:border-blue-600 focus:ring-2 focus:ring-blue-400 w-full border-slate-200 rounded-md text-sm py-2.5"
+                                                className="pl-2 focus:outline-none focus:border focus:border-orange-600 focus:ring-2 focus:ring-orange-400 w-full border-slate-200 rounded-md text-sm py-2.5"
                                                 type="text"
                                                 value={title}
                                                 onChange={(e) => setTitle(e.target.value)}
@@ -299,7 +299,7 @@ const ExamBuilder = () => {
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-slate-700">Time Limit (Minutes)</label>
                                             <input
-                                                className="pl-2 focus:outline-none focus:border focus:border-blue-600 focus:ring-2 focus:ring-blue-400 w-full border-slate-200 rounded-md text-sm py-2.5"
+                                                className="pl-2 focus:outline-none focus:border  focus:border-orange-600 focus:ring-2 focus:ring-orange-400 w-full border-slate-200 rounded-md text-sm py-2.5"
                                                 type="number"
                                                 value={timeLimit}
                                                 onChange={(e) => setTimeLimit(Number(e.target.value))}
@@ -309,7 +309,7 @@ const ExamBuilder = () => {
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-slate-700">Questions To Show</label>
                                             <input
-                                                className="pl-2 focus:outline-none focus:border focus:border-blue-600 focus:ring-2 focus:ring-blue-400 w-full border-slate-200 rounded-md text-sm py-2.5"
+                                                className="pl-2 focus:outline-none focus:border  focus:border-orange-600 focus:ring-2 focus:ring-orange-400 w-full border-slate-200 rounded-md text-sm py-2.5"
                                                 type="number"
                                                 value={questionsToShow}
                                                 onChange={(e) => setQuestionsToShow(Number(e.target.value))}
@@ -382,7 +382,7 @@ const ExamBuilder = () => {
                                 <p className="text-slate-500 text-sm">Design your questionnaire and configure anti-cheating measures.</p>
 
                                 {questions.map((q, qi) => (
-                                    <div key={qi} className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                    <div key={qi} className="bg-white rounded-xl  shadow-sm shadow-primary overflow-hidden">
                                         {/* {console.log(q.id)} */}
                                         <div className="p-8">
                                             {/* Header */}
@@ -432,9 +432,7 @@ const ExamBuilder = () => {
     resize-none
     outline-none
 
-    focus:border-sky-400
-    focus:ring-3
-    focus:ring-blue-400/60
+    focus:border-orange-600 focus:ring-2 focus:ring-orange-400
 
     transition
     duration-200
@@ -456,10 +454,19 @@ const ExamBuilder = () => {
                                                                 checked={q.correct === oi}
                                                                 onChange={() => setCorrect(qi, oi)}
                                                                 name={`q-${qi}`}
-                                                                className="size-5 text-primary"
+                                                                className="size-5 text-primary hidden"
                                                             />
 
-                                                            <div className="flex-1 flex items-center border border-slate-200 rounded-md px-4 py-3 bg-slate-50/30">
+                                                            <div
+    className={`
+        flex-1 flex items-center border rounded-md px-4 py-3 transition-all
+        ${
+            q.correct === oi
+                ? "bg-orange-200/30 border-2 border-orange-600"
+                : "bg-slate-50/30 border-slate-200"
+        }
+    `}
+>
                                                                 <span className="text-xs font-bold text-slate-400 w-6">
                                                                     {String.fromCharCode(65 + oi)}
                                                                 </span>
@@ -481,12 +488,12 @@ const ExamBuilder = () => {
                                 {/* Add Question */}
                                 <button
                                     onClick={addQuestion}
-                                    className="w-full cursor-pointer py-6 rounded-xl border-2 border-dashed border-blue-400 flex flex-col items-center gap-2 hover:border-primary hover:bg-white transition-all group"
+                                    className="w-full cursor-pointer py-6 rounded-xl border-2 border-dashed border-primary-dark flex flex-col items-center gap-2 "
                                 >
-                                    <span className="material-symbols-outlined text-4xl text-slate-300 group-hover:text-primary">
+                                    <span className="material-symbols-outlined text-4xl  text-primary-dark">
                                         add_circle
                                     </span>
-                                    <span className="text-sm font-semibold text-slate-400 group-hover:text-primary">
+                                    <span className="text-sm font-semibold text-primary">
                                         Add Another Question
                                     </span>
                                 </button>

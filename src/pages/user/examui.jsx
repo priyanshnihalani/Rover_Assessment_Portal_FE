@@ -185,7 +185,7 @@ export default function ExamUI() {
                                 <div className="pt-4 border-t">
                                     <button
                                         onClick={() => navigate('/')}
-                                        className="cursor-pointer w-full py-2.5 rounded-lg bg-apple-blue hover:bg-[#0071e3] text-white text-sm font-medium  transition"
+                                        className="cursor-pointer w-full py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-white text-sm font-medium  transition"
                                     >
                                         Enter Valid Question Paper
                                     </button>
@@ -319,7 +319,7 @@ export default function ExamUI() {
                                                             type="radio"
                                                             checked={selected}
                                                             onChange={() => selectOption(i)}
-                                                            className="size-4 text-sky-600 cursor-pointer"
+                                                            className="size-4 text-sky-600 cursor-pointer hidden"
                                                         />
                                                         <span
                                                             className={`ml-4 text-sm ${

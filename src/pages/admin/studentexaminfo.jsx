@@ -12,12 +12,15 @@ const StudentExamInfo = () => {
     const [loading, setLoading] = useState(false);
     const [displayData, setDisplayData] = useState([]);
     const [isSorted, setIsSorted] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const navigate = useNavigate()
 
     const loadSubmissions = async () => {
         try {
             setLoading(true)
-            const res = await ApiService.get(`/api/submission/getSubmissions/${id}`);
+            const res = await ApiService.post(`/api/submission/getSubmissions/${id}`, {
+                currentDate: new Date(selectedDate).toISOString().split("T")[0]
+            });
             setSubmissions(res.result || []);
             setDisplayData(res.result || []);
             setIsSorted(false);
@@ -32,6 +35,7 @@ const StudentExamInfo = () => {
         loadSubmissions();
     }, []);
 
+    console.log(new Date(selectedDate).toISOString().split("T")[0]);
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center text-slate-400">
@@ -39,6 +43,25 @@ const StudentExamInfo = () => {
             </div>
         );
     }
+    const handleDateFilter = (date) => {
+    setSelectedDate(date);
+
+    // if cleared → show all
+    if (!date) {
+        setDisplayData(submissions);
+        return;
+    }
+
+    const filtered = submissions.filter((s) => {
+        const submissionDate = new Date(s.createdAt)
+            .toISOString()
+            .split("T")[0]; // YYYY-MM-DD
+
+        return submissionDate === date;
+    });
+
+    setDisplayData(filtered);
+};
 
     const exportToExcel = () => {
 
@@ -93,23 +116,23 @@ const StudentExamInfo = () => {
 
     const handlePercentageSort = () => {
 
-    // if already sorted → reset
-    if (isSorted) {
-        setDisplayData(submissions);
-        setIsSorted(false);
-        return;
-    }
+        // if already sorted → reset
+        if (isSorted) {
+            setDisplayData(submissions);
+            setIsSorted(false);
+            return;
+        }
 
-    // sort highest percentage first
-    const sorted = [...submissions].sort((a, b) => {
-        const percentA = (a.score / a.totalMarks) * 100;
-        const percentB = (b.score / b.totalMarks) * 100;
-        return percentB - percentA;
-    });
+        // sort highest percentage first
+        const sorted = [...submissions].sort((a, b) => {
+            const percentA = (a.score / a.totalMarks) * 100;
+            const percentB = (b.score / b.totalMarks) * 100;
+            return percentB - percentA;
+        });
 
-    setDisplayData(sorted);
-    setIsSorted(true);
-};
+        setDisplayData(sorted);
+        setIsSorted(true);
+    };
 
     return (
         <div className="min-h-screen bg-slate-50">
@@ -155,9 +178,16 @@ const StudentExamInfo = () => {
                                 Total Attempts: {submissions.length}
                             </p>
                         </div>
+                        <input
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) => handleDateFilter(e.target.value)}
+                            className="border border-slate-200 rounded-lg px-3 py-2 text-xs"
+                        />
+
                         <button
                             onClick={exportToExcel}
-                            className="cursor-pointer px-4 py-2 text-xs font-medium rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                            className="cursor-pointer px-4 py-2 text-xs font-medium rounded-lg bg-primary text-white hover:bg-primary-dark transition"
                         >
                             Export Excel
                         </button>
